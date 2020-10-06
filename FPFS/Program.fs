@@ -1,16 +1,17 @@
-﻿open System
-
-[<EntryPoint>]
-let main args =
-    let guessTheNumber min max = 
-        printf "Введите число от %d до %d: " min max
-        let num = fun () -> Console.ReadLine()
-        let rnd = Random().Next(min, max)
-        let win x y = (x = y)
-        let toInt (x : string) = Convert.ToInt32(x)
-        while not (win rnd (toInt (num ()))) do
-            printf "%s" "Вы не угадали! Попробуйте ещё раз."
-            printf "%s" "Введите число от 1 до 10: "
-    guessTheNumber 1 10
-    printf "%s" "Вы выиграли!"
-    0
+﻿namespace FPFS
+    open System
+    open FPFS.lib.games
+    module Program =
+        [<EntryPoint>]
+        let main args =
+            let invitation =
+                printf "Добро пожаловать в меню.\n"
+                let guess = fun () -> Console.ReadLine()
+                while true do
+                    printf "Выберите одну из опций: "
+                    match (guess ()) with
+                    | "1" -> guessTheNumber 1 10
+                    | "0" -> exit 0
+                    | _ -> printf "Некорректный ввод!"
+            invitation
+            0
